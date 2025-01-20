@@ -1,0 +1,22 @@
+FROM python:3.13-bookworm AS builder
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV POETRY_VERSION=1.8.4
+ENV POETRY_CACHE_DIR=/tmp/poetry_cache
+ENV POETRY_NO_INTERACTION=1
+ENV POETRY_VIRTUALENVS_IN_PROJECT=1
+ENV POETRY_VIRTUALENVS_CREATE=1
+ENV VIRTUAL_ENV=/opt/app/.venv
+ENV PATH="/opt/app/.venv/bin:$PATH"
+ENV PYTHONPATH=.
+
+WORKDIR /opt/app
+
+RUN pip install poetry==${POETRY_VERSION}
+
+COPY . .
+
+RUN poetry install --no-root
+
+CMD ["poetry", "run", "python", "hatchet.py"]

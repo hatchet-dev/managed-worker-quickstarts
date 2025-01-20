@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "hatchet-cloud-example"
+version = "0.1.0"
+description = ""
+authors = ["Alexander Belanger <alexander@hatchet.run>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+hatchet-sdk = "^0.44.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
