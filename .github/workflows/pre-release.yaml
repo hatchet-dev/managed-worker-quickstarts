@@ -18,7 +18,7 @@ jobs:
           DOCKER_BUILDKIT=1 docker build -f ./go/Dockerfile \
             -t ghcr.io/hatchet-dev/managed-worker-quickstarts/go:latest \
             --platform linux/amd64 \
-            .
+            ./go
       - name: Push to GHCR
         run: |
           docker push ghcr.io/hatchet-dev/managed-worker-quickstarts/go:latest
@@ -36,7 +36,7 @@ jobs:
           DOCKER_BUILDKIT=1 docker build -f ./python/Dockerfile \
             -t ghcr.io/hatchet-dev/managed-worker-quickstarts/python:latest \
             --platform linux/amd64 \
-            .
+            ./python
       - name: Push to GHCR
         run: |
           docker push ghcr.io/hatchet-dev/managed-worker-quickstarts/python:latest
@@ -54,7 +54,7 @@ jobs:
           DOCKER_BUILDKIT=1 docker build -f ./typescript/Dockerfile \
             -t ghcr.io/hatchet-dev/managed-worker-quickstarts/typescript:latest \
             --platform linux/amd64 \
-            .
+            ./typescript
       - name: Push to GHCR
         run: |
           docker push ghcr.io/hatchet-dev/managed-worker-quickstarts/typescript:latest
