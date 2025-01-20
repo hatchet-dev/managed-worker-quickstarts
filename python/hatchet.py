@@ -13,10 +13,11 @@ class QuickstartWorkflow:
         }
     
     @hatchet.step(name="step2", parents=["step1"])
-    def step2(self, context: Context):
+    async def step2(self, context: Context):
         context.log("Called step2")
 
-        context.spawn_workflow("quickstart-child-python", {}).result()
+        res = await context.aio.spawn_workflow("quickstart-child-python", {})
+        await res.result()
 
         return {
             "result": "This is a step which spawned a child workflow."
