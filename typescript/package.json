@@ -10,7 +10,7 @@
   "dependencies": {
     "@hatchet-dev/typescript-sdk": "^0.18.0",
     "@types/node": "^22.10.5",
-    "tsx": "^4.19.2",
+    "tsx": "^4.19.3",
     "typescript": "^5.7.2"
   }
 }
