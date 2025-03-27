@@ -2,7 +2,7 @@ from hatchet_sdk import Hatchet, Context
 
 hatchet = Hatchet(debug=True)
  
-@hatchet.workflow(name="quickstart-python")
+@hatchet.workflow(name="first-workflow")
 class QuickstartWorkflow:
     @hatchet.step(name="step1")
     def step1(self, context: Context):

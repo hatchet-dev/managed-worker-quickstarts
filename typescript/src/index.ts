@@ -1,60 +1,33 @@
-import Hatchet, { Workflow, Context } from "@hatchet-dev/typescript-sdk";
+import Hatchet from "@hatchet-dev/typescript-sdk";
 
 const hatchet = Hatchet.init();
 
-const parentWorkflow: Workflow = {
-  id: "quickstart-typescript",
-  description: "This is an example Typescript workflow.",
-  steps: [
-    {
-      name: "step1",
-      run: async (ctx) => {
-        ctx.log(`This step was called at ${new Date().toISOString()}`);
+const firstWorkflow = hatchet.workflow({
+  name: 'first-workflow',
+})
 
-        return {
-          result: "This is a basic step in a DAG workflow.",
-        };
-      },
-    },
-    {
-      name: "step2",
-      parents: ["step1"],
-      run: async (ctx) => {
-        ctx.log(`This step was called at ${new Date().toISOString()}`);
+const firstWorkflowStep = firstWorkflow.task({
+  name: 'first-workflow-step',
+  fn: async (ctx) => {
+    console.log('executed first-workflow-step!');
+    return { firstWorkflowStep: 'first-workflow-step results!' };
+  },
+});
 
-        await ctx.spawnWorkflow("quickstart-child-workflow", {}).result();
-
-        return {
-          result: "This is a step which spawned a child workflow.",
-        };
-      },
-    },
-  ],
-};
-
-const childWorkflow: Workflow = {
-  id: "quickstart-child-typescript",
-  description:
-    "This is an example Typescript child workflow. This gets spawned by the parent workflow.",
-  steps: [
-    {
-      name: "child-step1",
-      run: async (ctx) => {
-        ctx.log(`This step was called at ${new Date().toISOString()}`);
-
-        return {
-          result: "This is a basic step in the child workflow.",
-        };
-      },
-    },
-  ],
-};
+firstWorkflow.task({
+  name: 'second-workflow-step',
+  parents: [firstWorkflowStep],
+  fn: async (ctx) => {
+    console.log('executed second-workflow-step!');
+    return { secondWorkflowStep: 'second-workflow-step results!' };
+  },
+});
 
 async function main() {
-  const worker = await hatchet.worker("my-worker");
-  await worker.registerWorkflow(parentWorkflow);
-  await worker.registerWorkflow(childWorkflow);
-  worker.start();
+  const worker = await hatchet.worker('managed-worker', {
+    workflows: [firstWorkflow],
+  });
+  await worker.start();
 }
 
 main();

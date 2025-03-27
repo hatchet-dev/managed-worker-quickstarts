@@ -33,7 +33,7 @@ func main() {
 
 	err = w.RegisterWorkflow(
 		&worker.WorkflowJob{
-			Name:        "quickstart-go",
+			Name:        "first-workflow",
 			Description: "This is an example Go workflow.",
 			On:          worker.NoTrigger(),
 			Steps: []*worker.WorkflowStep{
